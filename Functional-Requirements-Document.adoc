@@ -51,14 +51,7 @@ The prototype shall:
 
 == 4. System Overview
 
-The system shall:
-
-. Ingest a label image (PNG, JPG, PDF).
-. Perform OCR and structured text extraction.
-. Normalize extracted fields.
-. Perform rule-based comparisons against user-entered application metadata.
-. Validate regulatory text formatting requirements.
-. Display structured compliance results in a simple, high-clarity interface.
+The system accepts alcohol label images and user-entered application data, identifies discrepancies between them, and presents structured results to support agent review.
 
 The system shall function as a *decision-support tool*, not an autonomous adjudication engine.
 
@@ -274,18 +267,7 @@ Rationale: Treasury firewall blocks outbound connections.
 The application shall:
 
 * Be deployable within Azure environment.
-* Support containerized deployment (e.g., Docker).
 * Avoid architecture incompatible with government infrastructure.
-
-
-
-==== FR-SEC-3: Data Handling
-
-The prototype shall:
-
-* Avoid storing uploaded labels persistently.
-* Process in-memory where possible.
-* Delete temporary files after processing.
 
 
 
