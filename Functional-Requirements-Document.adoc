@@ -3,14 +3,6 @@
 
 = Functional Requirements Document (FRD)
 
-AI-Powered Alcohol Label Verification Prototype
-
-* *Department of the Treasury – TTB Compliance Division*
-* *Document Version:* Draft 0.1
-* *Prepared By:* Robb Shecter
-* *Date:* 2026-02-20
-
-
 
 == 1. Purpose
 
