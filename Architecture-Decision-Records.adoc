@@ -5,6 +5,8 @@
 
 == ADR 1 — Baseline Processing Strategy: Local vs Cloud OCR/AI
 
+=== Status: Accepted
+
 === Context:
 Marcus Williams noted that "our network blocks outbound traffic to a lot of domains," and prior vendor ML features failed due to firewall blocking. No explicit prohibition of cloud APIs is given, but network restrictions are implied.
 
@@ -26,8 +28,10 @@ Adopt *local OCR and processing as the default baseline* for MVP. Treat cloud OC
 
 == ADR 2 — Microservice Boundary for OCR and Vision Processing
 
+=== Status: Proposed
+
 === Context:
-Rails is your strongest web framework, but Python has a superior ecosystem for OCR and ML integration (Tesseract, PaddleOCR, OpenCV, vision LLMs).
+Both frontend and backend work must be done by the app. Ruby on Rails is excellent for fast web app prototyping. Python excels at OCR and ML integration.
 
 === Decision:
 Separate core *web application (Rails)* from *vision/OCR processing (Python microservice)*, communicating over a well-defined API or job queue.
@@ -35,12 +39,12 @@ Separate core *web application (Rails)* from *vision/OCR processing (Python micr
 === Alternatives Considered:
 
 . Implement OCR in Rails (Ruby bindings) — limited ecosystem, harder tuning; not optimal.
-. Full Python monolith (Django/FastAPI) — loses Rails productivity for UI & acceptance tests.
+. Full Python monolith (Django/FastAPI) — loses Rails productivity for UI & tests.
 . Rails + Python microservice — _selected_.
 
 === Consequences:
 
-* Leverages Rails' mature ecosystem for acceptance tests, web UI, and API.
+* Leverages Rails' mature ecosystem for TDD, web UI, and API.
 * Leverages Python's ecosystem for OCR and image processing.
 * Provides clear service boundary and contract (JSON schema).
 ** Adds operational complexity of two runtimes and service orchestration.
@@ -48,6 +52,8 @@ Separate core *web application (Rails)* from *vision/OCR processing (Python micr
 
 
 == ADR 3 — Synchronous "Fast Pass" vs Asynchronous "Full Pass" Processing
+
+=== Status: Accepted
 
 === Context:
 Stakeholder notes emphasize prior latency issues — descriptions like "30–40s processing killed usability" and an aspiration toward "<5s" feedback for interactive scans.
@@ -66,7 +72,7 @@ Model two processing paths:
 
 === Consequences:
 
-* Meets interactive user expectations when used in exam mode.
+* Meets interactive user expectations.
 * Supports batch workflows with reliable background processing.
 ** Requires job orchestration and partial result reporting model.
 
@@ -75,16 +81,11 @@ Model two processing paths:
 == ADR 4 — Acceptance Tests as Executable Requirements
 
 === Context:
-The assignment emphasizes a working core over incomplete features. You want to signal design maturity by treating requirements as first-class artifacts.
+The assignment emphasizes a working core over incomplete features.
 
 === Decision:
 Write *black-box acceptance tests* (e.g., in Checkly with Playwright) to encode use cases as executable specifications prior to full implementation.
 
-=== Alternatives Considered:
-
-. Write only unit tests or partial integration tests — insufficient coverage of user flows.
-. Write acceptance tests _after_ implementation — loses test-first behavior and verification artifacts.
-. Write acceptance tests _first_ and use them as both specification and monitoring — _selected_.
 
 === Consequences:
 
@@ -99,7 +100,7 @@ Write *black-box acceptance tests* (e.g., in Checkly with Playwright) to encode 
 Treasury and IRS systems are known to be hosted in AWS GovCloud, which satisfies federal cloud compliance requirements.
 
 === Decision:
-Define an *optional GovCloud adapter layer* for OCR/ML/queue services in design, explicitly conditional on firewall rules and GovCloud connectivity being authorized.
+Define an *optional GovCloud adapter* for OCR/ML/queue services. The service layer will be designed to present a unified interface to the OCR/ML/queue services, regardless of the underlying implementation. 
 
 === Alternatives Considered:
 
