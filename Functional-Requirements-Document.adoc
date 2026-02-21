@@ -1,6 +1,9 @@
+:toc:
+:toclevels: 0
+
 = Functional Requirements Document (FRD)
 
-== AI-Powered Alcohol Label Verification Prototype
+AI-Powered Alcohol Label Verification Prototype
 
 * *Department of the Treasury – TTB Compliance Division*
 * *Document Version:* Draft 0.1
@@ -28,7 +31,7 @@ The prototype shall:
 * Compare extracted values against application form data (manually entered into the prototype UI).
 * Validate the Government Health Warning Statement for exact regulatory compliance.
 * Identify mismatches and flag potential issues.
-* Return results within strict performance thresholds (≤ 5 seconds per label).
+* Return results within strict performance thresholds (see FR-OCR-2).
 * Operate as a standalone proof-of-concept (no integration with COLA).
 * Require no external outbound network dependencies that would be blocked by Treasury firewall controls.
 
@@ -71,7 +74,7 @@ The system shall function as a *decision-support tool*, not an autonomous adjudi
 
 == 5. Functional Requirements
 
-== 5.1 User Interface Requirements
+== 5.1 User Interface
 
 === FR-UI-1: Simplicity
 
@@ -117,7 +120,7 @@ For each label, the system shall display:
 |Field             |Label Value |Application Value |Status
 |Brand Name        |Extracted   |User-entered      |Match / Mismatch
 |ABV               |Extracted   |User-entered      |Match / Mismatch
-|Class/Type       |Extracted   |User-entered      |Match / Mismatch
+|Class/Type        |Extracted   |User-entered      |Match / Mismatch
 |Net Contents      |Extracted   |User-entered      |Match / Mismatch
 |Warning Statement |Extracted   |N/A               |Valid / Invalid
 |===
@@ -126,7 +129,7 @@ The system shows either match/mismatch or valid/invalid along with a confidence 
 
 
 
-== 5.2 OCR & Extraction Requirements
+== 5.2 OCR & Extraction
 
 === FR-OCR-1: Text Extraction
 
@@ -162,7 +165,7 @@ If confidence score < threshold:
 
 
 
-== 5.3 Field Matching Requirements
+== 5.3 Field Matching
 
 === FR-MATCH-1: Brand Name Comparison
 
@@ -294,58 +297,7 @@ The prototype shall:
 
 
 
-== 6. Non-Functional Requirements
-
-[options="header"]
-|===
-|Category        |Requirement
-|Performance     |≤ 5 sec per label
-|Availability    |Prototype-grade; no SLA required
-|Scalability     |Support batch up to 300 labels
-|Usability       |Minimal training required
-|Accessibility   |Large fonts, clear indicators
-|Maintainability |Modular architecture
-|Extensibility   |Designed for future COLA integration
-|===
-
-
-
-== 7. Error Handling Requirements
-
-The system shall:
-
-* Display clear error messages for unreadable files.
-* Handle unsupported file types gracefully.
-* Timeout with user notification if processing exceeds threshold.
-* Fail safely (no silent errors).
-
-
-
-== 8. Trade-Off Documentation (To Be Included in README)
-
-Prototype documentation shall include:
-
-* OCR engine selection rationale.
-* Local vs cloud ML trade-off analysis.
-* Handling of formatting detection limitations.
-* Known limitations (e.g., stylized fonts, heavy glare).
-* Future roadmap for production hardening.
-
-
-
-== 9. Success Criteria
-
-The prototype will be considered successful if:
-
-* It demonstrably reduces manual checklist effort.
-* It processes labels within 5 seconds.
-* It flags mismatches accurately.
-* It is usable by low-technical-literacy users.
-* It maintains human oversight.
-
-
-
-== 10. Future Enhancements (Post-Prototype)
+== 6. Future Enhancements (Post-Prototype)
 
 * Direct COLA integration.
 * Workflow queue integration.
