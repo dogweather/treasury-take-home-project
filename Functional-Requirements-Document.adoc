@@ -1,5 +1,5 @@
 :toc:
-:toclevels: 0
+:toclevels: 1
 
 = Functional Requirements Document (FRD)
 
