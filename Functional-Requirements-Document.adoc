@@ -168,9 +168,9 @@ The system shall validate the warning statement against the federally mandated t
 
 > *GOVERNMENT WARNING:* (1) ACCORDING TO THE SURGEON GENERAL, WOMEN SHOULD NOT DRINK ALCOHOLIC BEVERAGES DURING PREGNANCY BECAUSE OF THE RISK OF BIRTH DEFECTS. (2) CONSUMPTION OF ALCOHOLIC BEVERAGES IMPAIRS YOUR ABILITY TO DRIVE A CAR OR OPERATE MACHINERY, AND MAY CAUSE HEALTH PROBLEMS.
 
-* Must match word-for-word.
-* Must include "*GOVERNMENT WARNING:*" in all caps and bold.
-* Must detect deviation in wording.
+* Must match word-for-word. footnote:[Jenny Park interview.]
+* Must include "*GOVERNMENT WARNING:*" in all caps and bold. footnote:[Ibid.]
+* Must detect deviation in wording. footnote:[Ibid.]
 
 If formatting confidence is insufficient, system shall flag for manual review.
 
@@ -180,21 +180,14 @@ If formatting confidence is insufficient, system shall flag for manual review.
 
 ==== FR-CONF-1: Confidence Scoring
 
-Each extracted field shall include a confidence score.
-
-If below threshold:
-
-* Highlight for the user to review.
-* Recommend manual verification.
-
+The system shall indicate when it's uncertain about an extraction and recommend manual review. footnote:[Jenny Park & Dave Morrison interviews.]
 
 
 ==== FR-CONF-2: Human-in-the-Loop
 
 The system shall:
 
-* Allow manual correction of extracted values.
-* Allow override of flagged mismatches.
+* Allow override of flagged mismatches. footnote:[Dave Morrison interview.]
 
 
 
@@ -204,27 +197,21 @@ The system shall:
 
 The system shall:
 
-* Process up to 300 labels in a batch.
-* Display progress indicator.
-* Maintain individual result records per label.
+* Process up to 300 labels in a batch. footnote:[Sarah Chen interview.]
+* Maintain individual result records per label. footnote:[Ibid.]
 
 
 
 ==== FR-BATCH-2: Summary Reporting
 
-The system shall provide:
-
-* Total labels processed
-* Number compliant
-* Number flagged
-* Number low-confidence
+The system shall provide enough information to the user to review the batch and determine which labels need to be reviewed manually. footnote:[Sarah Chen interview.]
 
 
 
 === 5.7 Security & Deployment Constraints
 
 ==== FR-SEC-1: No External ML Dependencies
-The prototype shall not rely on outbound API calls to public ML endpoints.
+The prototype shall not rely on outbound API calls to public ML endpoints. footnote:[Marcus Williams interview.]
 
 Rationale: Treasury firewall blocks outbound connections.
 
@@ -232,5 +219,5 @@ Rationale: Treasury firewall blocks outbound connections.
 ==== FR-SEC-2: Azure-Compatible Deployment
 The application shall:
 
-* Be deployable within Azure environment.
-* Avoid architecture incompatible with government infrastructure.
+* Be deployable within Azure environment. footnote:[Ibid.]
+* Avoid architecture incompatible with government infrastructure. footnote:[Ibid.]
