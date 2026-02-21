@@ -46,7 +46,7 @@ The prototype shall:
 [options="header"]
 |===
 |Stakeholder     |Role                     |Key Concerns
-|Sarah Chen      |Deputy Director          |Throughput, usability, batch processing, 5-second response time
+|Sarah Chen      |Deputy Director of Label Compliance         |Throughput, usability, batch processing, 5-second response time
 |Marcus Williams |IT Systems Administrator |Azure environment, firewall constraints, security posture
 |Dave Morrison   |Senior Agent             |Preservation of human judgment, false positives, workflow disruption
 |Jenny Park      |Junior Agent             |Automation of repetitive checklist tasks, warning statement precision
@@ -77,7 +77,6 @@ The system shall function as a *decision-support tool*, not an autonomous adjudi
 
 The interface shall:
 
-* Use a single-page workflow.
 * Minimize navigation layers.
 * Present clearly labeled buttons.
 * Avoid hidden menus or complex UI interactions.
@@ -118,15 +117,12 @@ For each label, the system shall display:
 |Field             |Label Value |Application Value |Status
 |Brand Name        |Extracted   |User-entered      |Match / Mismatch
 |ABV               |Extracted   |User-entered      |Match / Mismatch
+|Class/Type       |Extracted   |User-entered      |Match / Mismatch
 |Net Contents      |Extracted   |User-entered      |Match / Mismatch
 |Warning Statement |Extracted   |N/A               |Valid / Invalid
 |===
 
-Status indicators shall use:
-
-* Green = match/compliant
-* Red = mismatch/noncompliant
-* Yellow = low confidence OCR
+The system shows either match/mismatch or valid/invalid along with a confidence indicator.
 
 
 
@@ -211,10 +207,6 @@ The system shall validate the warning statement against the federally mandated t
 * Must match word-for-word.
 * Must include "GOVERNMENT WARNING:" in all caps.
 * Must detect deviation in wording.
-
-
-
-=== FR-WARN-2: Formatting Check
 
 Where feasible, the system shall:
 
