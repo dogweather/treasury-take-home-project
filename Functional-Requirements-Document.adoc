@@ -84,7 +84,7 @@ The system shall allow a user to:
 
 The system shall:
 
-* Accept multiple label files, up to 300, simultaneously. footnote:[Ibid.]
+* Accept multiple label files simultaneously. footnote:[Ibid.]
 * Display individual results per label. footnote:[Ibid.]
 * Provide a consolidated summary view of mismatches. footnote:[Ibid.]
 
