@@ -121,9 +121,9 @@ The system shall return structured results in ≤ 5 seconds per label. footnote:
 
 The system shall attempt extraction from:
 
-* Slightly rotated images
-* Moderate glare
-* Non-ideal lighting
+* Slightly rotated images footnote:[Jenny Park interview.]
+* Moderate glare footnote:[Ibid.]
+* Non-ideal lighting footnote:[Ibid.]
 
 If confidence score < threshold:
 
@@ -137,9 +137,9 @@ If confidence score < threshold:
 
 The system shall:
 
-* Perform case-insensitive comparison.
-* Potentially perform other "obviously the same" comparisons.
-* Flag substantive lexical differences.
+* Perform case-insensitive comparison. footnote:[Dave Morrison interview.]
+* Potentially perform other "obviously the same" comparisons. footnote:[Ibid.]
+* Flag substantive lexical differences. footnote:[Ibid.]
 
 
 
@@ -147,8 +147,8 @@ The system shall:
 
 The system shall:
 
-* Extract % ABV.
-* Recognize proof equivalency (proof = ABV × 2 for spirits).
+* Extract % ABV. footnote:[Sarah Chen interview.]
+* Recognize proof equivalency (proof = ABV × 2 for spirits). footnote:[Additional Context section.]
 
 
 
@@ -156,7 +156,7 @@ The system shall:
 
 The system shall:
 
-* Extract volume measurement.
+* Extract volume measurement. footnote:[Ibid.]
 
 
 
