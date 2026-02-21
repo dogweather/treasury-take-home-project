@@ -30,7 +30,7 @@ The FRD captures user needs, system boundaries, and measurable acceptance criter
 * Link: xref:Functional-Requirements-Document.adoc[Functional Requirements Document]
 
 This document includes:
-* Detailed use cases
+
 * Input/output specifications
 * Quality and performance expectations
 * Constraint assumptions
@@ -42,6 +42,7 @@ A set of ADRs that document the rationale, alternatives considered, chosen appro
 * Link: xref:Architecture-Decision-Records.adoc[Architectural Decision Records]
 
 These ADRs cover:
+
 * Baseline processing strategy (local vs. cloud)
 * Service boundaries and framework selection
 * Sync vs. async processing model
@@ -52,6 +53,7 @@ These ADRs cover:
 == Proposed Execution Plan
 
 This repository is structured to support:
+
 * Incremental implementation via TDD/BDD
 * Clear API contract definition and mock tests
 * Human review queue and evidence traceability
@@ -60,6 +62,7 @@ This repository is structured to support:
 === Next Work Packages
 
 A non-exhaustive list of remaining tasks:
+
 * Implement core extraction pipelines
 * Formalize OCR service API and Rails backend
 * Integrate queue workers and job orchestration
