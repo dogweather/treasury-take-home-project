@@ -62,10 +62,10 @@ The system shall function as a *decision-support tool*, not an autonomous adjudi
 === 5.1 User Interface
 
 ==== FR-UI-1: Simplicity
-
 The interface shall:
 
-* Be simple and easy to use for a non-technical user.
+* Be simple and easy to use for a non-technical user. footnote:[Source: Sarah Chen interview]
+
 
 Rationale: Mixed technical literacy across agents.
 
