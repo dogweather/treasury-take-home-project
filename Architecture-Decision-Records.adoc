@@ -115,25 +115,6 @@ Define an *optional GovCloud adapter* for OCR/ML/queue services. The service lay
 ** Adds a requirement to coordinate firewall and governance later.
 
 
-== ADR 6 — API Contract First vs Code First
-
-=== Context:
-You are severely time-constrained. Robust discovery of functional behavior and integration expectations is needed before implementation.
-
-=== Decision:
-Design *API contracts and JSON schemas before implementing backend code* to ensure the service boundary is explicit and decisions are testable.
-
-=== Alternatives Considered:
-
-. Code first and retro-engineer API contracts — risk misalignment.
-. API contract first and derive implementation — _selected_.
-
-=== Consequences:
-
-* Enables acceptance tests and mocking ahead of implementation.
-* Clarifies integration between Rails and OCR service early.
-** Requires discipline in schema definition.
-
 
 == ADR 7 — Confidence Scoring Definition and Explanation
 
