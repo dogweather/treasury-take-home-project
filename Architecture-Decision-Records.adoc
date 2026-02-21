@@ -116,7 +116,7 @@ Define an *optional GovCloud adapter* for OCR/ML/queue services. The service lay
 
 
 
-== ADR 7 — Confidence Scoring Definition and Explanation
+== ADR 6 — Confidence Scoring Definition and Explanation
 
 === Context:
 AI/ML extraction is inherently probabilistic. Stakeholders require "transparency of degree of certainty."
@@ -143,7 +143,7 @@ Deliver per-field confidence and evidence locations.
 ** Requires test harness to capture and evaluate confidence.
 
 
-== ADR 8 — Synthetic Monitoring for Core Use Cases
+== ADR 7 — Synthetic Monitoring for Core Use Cases
 
 === Context:
 Acceptance tests are written in Checkly. You want them to serve double duty.
@@ -164,7 +164,7 @@ Use the same acceptance tests as *continuous synthetic monitoring* on a status p
 ** Requires maintenance of monitoring config.
 
 
-== ADR 9 — Scoped MVP vs Full Feature Set under Deadline
+== ADR 8 — Scoped MVP vs Full Feature Set under Deadline
 
 === Context:
 Assignment deadline is imminently due. The evaluation rubric emphasizes architecture and working core over breadth.
@@ -193,7 +193,7 @@ Defer remaining implementation to a documented backlog.
 ** Less runnable code to demo, but compensated by docs and tests.
 
 
-== ADR 10 — Delegation and Incremental Implementation Strategy
+== ADR 9 — Delegation and Incremental Implementation Strategy
 
 === Context:
 Remaining use cases will likely require more time than available. Reviewers value maintainable delegation.
