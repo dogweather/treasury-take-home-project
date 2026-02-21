@@ -141,11 +141,8 @@ If confidence score < threshold:
 The system shall:
 
 * Perform case-insensitive comparison.
-* Normalize apostrophes and punctuation.
-* Ignore minor stylistic differences (e.g., capitalization).
+* Potentially perform other "obviously the same" comparisons.
 * Flag substantive lexical differences.
-
-The system shall allow agent override.
 
 
 
@@ -155,8 +152,6 @@ The system shall:
 
 * Extract % ABV.
 * Recognize proof equivalency (proof = ABV × 2 for spirits).
-* Normalize numeric formatting.
-* Flag discrepancies beyond rounding tolerance.
 
 
 
@@ -165,8 +160,6 @@ The system shall:
 The system shall:
 
 * Extract volume measurement.
-* Normalize units (mL, L, fl oz).
-* Compare normalized values.
 
 
 
@@ -176,15 +169,11 @@ The system shall:
 
 The system shall validate the warning statement against the federally mandated text:
 
+> *GOVERNMENT WARNING:* (1) ACCORDING TO THE SURGEON GENERAL, WOMEN SHOULD NOT DRINK ALCOHOLIC BEVERAGES DURING PREGNANCY BECAUSE OF THE RISK OF BIRTH DEFECTS. (2) CONSUMPTION OF ALCOHOLIC BEVERAGES IMPAIRS YOUR ABILITY TO DRIVE A CAR OR OPERATE MACHINERY, AND MAY CAUSE HEALTH PROBLEMS.
+
 * Must match word-for-word.
-* Must include "GOVERNMENT WARNING:" in all caps.
+* Must include "GOVERNMENT WARNING:" in all caps and bold.
 * Must detect deviation in wording.
-
-Where feasible, the system shall:
-
-* Detect uppercase requirement.
-* Attempt to detect bold styling.
-* Flag if likely noncompliant.
 
 If formatting confidence is insufficient, system shall flag for manual review.
 
