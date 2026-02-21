@@ -1,0 +1,304 @@
+## ADR 1 — Baseline Processing Strategy: Local vs Cloud OCR/AI
+
+### Context:
+The stakeholder prompt mentions that “our network blocks outbound traffic to a lot of domains,” and prior vendor ML features failed due to firewall blocking. No explicit prohibition of cloud APIs is given, but network restrictions are implied.
+
+### Decision:
+Adopt **local OCR and processing as the default baseline** for MVP. Treat cloud OCR/ML (e.g., AWS GovCloud) as an _optional adapter_ that can be enabled with explicit firewall/IT approval.
+
+### Alternatives Considered:
+
+1. Rely primarily on cloud OCR/ML APIs (e.g., Google Vision, AWS Textract) — _rejected due to implied network restrictions and security uncertainty_.
+2. Hybrid: local for MVP + optional cloud adapters behind feature flags — _selected_.
+    
+
+### Consequences:
+
+- Ensures MVP functions without relying on outbound connectivity.
+    
+- Avoids surprise failures from network egress blocking.
+    
+- Cloud adaptor becomes a documented optional enhancement with security gating.  
+    − Some advanced OCR quality improvements may be deferred until cloud is enabled.
+    
+
+---
+
+## ADR 2 — Microservice Boundary for OCR and Vision Processing
+
+### Context:  
+Rails is your strongest web framework, but Python has a superior ecosystem for OCR and ML integration (Tesseract, PaddleOCR, OpenCV, vision LLMs).
+
+### Decision:  
+Separate core **web application (Rails)** from **vision/OCR processing (Python microservice)**, communicating over a well-defined API or job queue.
+
+### Alternatives Considered:
+
+1. Implement OCR in Rails (Ruby bindings) — limited ecosystem, harder tuning; not optimal.
+    
+2. Full Python monolith (Django/FastAPI) — loses Rails productivity for UI & acceptance tests.
+    
+3. Rails + Python microservice — _selected_.
+    
+
+### Consequences:
+
+- Leverages Rails’ mature ecosystem for acceptance tests, web UI, and API.
+    
+- Leverages Python’s ecosystem for OCR and image processing.
+    
+- Provides clear service boundary and contract (JSON schema).  
+    − Adds operational complexity of two runtimes and service orchestration.
+    
+
+---
+
+## ADR 3 — Synchronous “Fast Pass” vs Asynchronous “Full Pass” Processing
+
+### Context:  
+Stakeholder notes emphasize prior latency issues — descriptions like “30–40s processing killed usability” and an aspiration toward “<5s” feedback for interactive scans.
+
+### Decision:  
+Model two processing paths:
+
+- **Synchronous fast pass** for interactive user feedback (quality score, simple OCR presence checks).
+    
+- **Asynchronous full pass** for deeper extraction and compliance judgments.
+    
+
+### Alternatives Considered:
+
+1. Fully synchronous pipeline — risks timeouts and UX issues.
+    
+2. Fully asynchronous only — loses interactive feedback loop.
+    
+3. Hybrid fast + full pipeline — _selected_.
+    
+
+### Consequences:
+
+- Meets interactive user expectations when used in exam mode.
+    
+- Supports batch workflows with reliable background processing.  
+    − Requires job orchestration and partial result reporting model.
+    
+
+---
+
+## ADR 4 — Acceptance Tests as Executable Requirements
+
+### Context:  
+The assignment emphasizes a working core over incomplete features. You want to signal design maturity by treating requirements as first-class artifacts.
+
+### Decision:  
+Write **black-box acceptance tests** (e.g., in Checkly with Playwright) to encode use cases as executable specifications prior to full implementation.
+
+### Alternatives Considered:
+
+1. Write only unit tests or partial integration tests — insufficient coverage of user flows.
+    
+2. Write acceptance tests _after_ implementation — loses test-first behavior and verification artifacts.
+    
+3. Write acceptance tests _first_ and use them as both specification and monitoring — _selected_.
+    
+
+    ### Consequences:
+
+- Tests become living documentation and serve as SLA synthetic monitoring.
+    
+- Verifies behavior against functional requirements without complete implementation.  
+    − Requires initial investment in test scaffolding.
+    
+
+---
+
+## ADR 5 — Use of GovCloud for Optional Cloud Services
+
+### Context:  
+Treasury and IRS systems are known to be hosted in AWS GovCloud, which satisfies federal cloud compliance requirements.
+
+### Decision:  
+Define an **optional GovCloud adapter layer** for OCR/ML/queue services in design, explicitly conditional on firewall rules and GovCloud connectivity being authorized.
+
+### Alternatives Considered:
+
+1. Treat cloud services as primary — _rejected due to network constraint uncertainty_.
+    
+2. Exclude cloud services entirely — limits future enhancement.
+    
+3. Include optional GovCloud adapter with explicit conditions — _selected_.
+    
+
+### Consequences:
+
+- Aligns future cloud integration with federal infrastructure and compliance posture.
+    
+- Documents readiness to enhance quality with cloud services.  
+    − Adds a requirement to coordinate firewall and governance later.
+    
+
+---
+
+## ADR 6 — API Contract First vs Code First
+
+### Context:  
+You are severely time-constrained. Robust discovery of functional behavior and integration expectations is needed before implementation.
+
+### Decision:  
+Design **API contracts and JSON schemas before implementing backend code** to ensure the service boundary is explicit and decisions are testable.
+
+### Alternatives Considered:
+
+1. Code first and retro-engineer API contracts — risk misalignment.
+    
+2. API contract first and derive implementation — _selected_.
+    
+
+### Consequences:
+
+- Enables acceptance tests and mocking ahead of implementation.
+    
+- Clarifies integration between Rails and OCR service early.  
+    − Requires discipline in schema definition.
+    
+
+---
+
+## ADR 7 — Confidence Scoring Definition and Explanation
+
+### Context:  
+AI/ML extraction is inherently probabilistic. Stakeholders require “transparency of degree of certainty.”
+
+### Decision:  
+Define a **confidence model** that combines:
+
+- OCR token confidence
+    
+- image quality signals
+    
+- parser/ML uncertainty
+    
+
+Deliver per-field confidence and evidence locations.
+
+### Alternatives Considered:
+
+1. Single binary pass/fail — loses nuance and reviewer trust.
+    
+2. Confidence by anecdote — unstructured.
+    
+3. Structured scoring model — _selected_.
+    
+
+### Consequences:
+
+- Provides explainable metrics for each field decision.
+    
+- Enables thresholding for human review vs auto-approve.  
+    − Requires test harness to capture and evaluate confidence.
+    
+
+---
+
+## ADR 8 — Synthetic Monitoring for Core Use Cases
+
+### Context:  
+Acceptance tests are written in Checkly. You want them to serve double duty.
+
+### Decision:  
+Use the same acceptance tests as **continuous synthetic monitoring** on a status page, treating SLA evaluation as part of delivery.
+
+### Alternatives Considered:
+
+1. Acceptance tests only at submission time — loses ongoing validation.
+    
+2. Separate synthetic monitoring suite — extra overhead.
+    
+3. Combined acceptance + synthetic monitoring — _selected_.
+    
+
+### Consequences:
+
+- Provides operational visibility early.
+    
+- Adds a proactive quality measurement layer.  
+    − Requires maintenance of monitoring config.
+    
+
+---
+
+## ADR 9 — Scoped MVP vs Full Feature Set under Deadline
+
+### Context:  
+Assignment deadline is imminently due. The evaluation rubric emphasizes architecture and working core over breadth.
+
+### Decision:  
+Focus on delivering:
+
+- detailed FRD
+    
+- use cases
+    
+- executable acceptance tests
+    
+- design docs and trade-offs
+    
+- partial prototype components
+    
+
+Defer remaining implementation to a documented backlog.
+
+### Alternatives Considered:
+
+1. Chase full prototype — risk incomplete delivery.
+    
+2. Deliver minimal shell with poor tests and mix — _rejected_.
+    
+3. Deliver architecture artifacts and verified skeleton with backlog — _selected_.
+    
+
+### Consequences:
+
+- Aligns with stated assessment priorities.
+    
+- Reduces risk of missing the deadline with half-baked features.  
+    − Less runnable code to demo, but compensated by docs and tests.
+    
+
+---
+
+## ADR 10 — Delegation and Incremental Implementation Strategy
+
+### Context:  
+Remaining use cases will likely require more time than available. Reviewers value maintainable delegation.
+
+### Decision:  
+Document a clear delegation strategy with:
+
+- priorities
+    
+- dependencies
+    
+- coordination patterns with junior devs or AI assistants
+    
+
+### Alternatives Considered:
+
+1. Attempt to complete all features personally — impractical.
+    
+2. Leave remaining work undiscussed — creates risk.
+    
+3. Articulate delegation strategy — _selected_.
+    
+
+### Consequences:
+
+- Demonstrates engineering leadership and practical planning.
+    
+- Shows route to complete system beyond MVP.  
+    − Relies on team augmentation post-delivery.
+    
+
+---
+
+If you’d like, I can format these ADRs into **Markdown or ADR boilerplate files** (e.g., `0001-local-vs-cloud-ocr.md`) with metadata and links between them — ready to include in your submission repository.
