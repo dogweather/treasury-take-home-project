@@ -1,1 +1,88 @@
-# treasury-take-home-project
+= Label Compliance Analysis — Take-Home Project
+:toc:
+:toclevels: 3
+:doctype: book
+:lang: en
+
+== Overview
+
+This repository contains the deliverables for the *Label Compliance Analysis* take-home project for the IT Specialist (Artificial Intelligence) position at the U.S. Department of the Treasury. The focus of this submission is on **design clarity, architectural reasoning, and testable requirements** in a constrained delivery window, prioritizing a working core and clean documentation over incomplete features as specified in the assignment.
+
+This README provides orientation to the project scope, artifacts supplied, and design decisions made.
+
+== Contents
+
+* `docs/` — Structured design artifacts
+** Functional Requirements Document (FRD)
+** Architectural Decision Records (ADRs)
+* `infra/` — Server configuration notes
+* `ocr/` — Local OCR experimentation (pytesseract)
+* `tests/` — Acceptance test scaffolding (Checkly / Playwright placeholders)
+* `README.adoc` — Project overview
+
+== Status
+
+As of submission:
+
+* Local Ubuntu VM provisioned and configured
+* Pytesseract OCR installed and exercised
+* Design artifacts drafted
+* Repository structured for incremental development
+
+Due to the time constraint and prioritization of architectural artifacts and executable test specifications, the core compliance features are scoped as skeleton implementations with clear next steps.
+
+== Deliverables
+
+=== Functional Requirements Document
+
+The FRD captures user needs, system boundaries, and measurable acceptance criteria aligned to stakeholder interviews and the assignment rubric.
+
+* Link: xref:FRD.adoc[Functional Requirements Document]
+
+This document includes:
+* Detailed use cases
+* Input/output specifications
+* Quality and performance expectations
+* Constraint assumptions
+
+=== Architectural Decision Records
+
+A set of ADRs that document the rationale, alternatives considered, chosen approaches, and consequences for major architectural choices.
+
+* Link: xref:arch/ADRs.adoc[Architectural Decision Records]
+
+These ADRs cover:
+* Baseline processing strategy (local vs. cloud)
+* Service boundaries and framework selection
+* Sync vs. async processing model
+* Test strategy and executable requirements
+* Confidence scoring model
+* Optional GovCloud integration
+
+== Proposed Execution Plan
+
+This repository is structured to support:
+* Incremental implementation via TDD/BDD
+* Clear API contract definition and mock tests
+* Human review queue and evidence traceability
+* Synthetic monitoring via automated acceptance tests
+
+=== Next Work Packages
+
+A non-exhaustive list of remaining tasks:
+* Implement core extraction pipelines
+* Formalize OCR service API and Rails backend
+* Integrate queue workers and job orchestration
+* Expand acceptance test coverage
+* Enable evidence visualization and confidence reporting
+
+== How to Use This Repo
+
+1. Review the FRD and ADRs to understand the problem space and design intent.
+2. Examine the acceptance tests in `tests/` as executable requirements.
+3. Explore `ocr/` for initial OCR service experiments.
+4. Extend implementation against the scaffolded test harness.
+
+== Contact
+
+For questions or follow-up, please reach out to the hiring manager persona associated with this submission.
