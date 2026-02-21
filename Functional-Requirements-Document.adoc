@@ -66,7 +66,6 @@ The interface shall:
 
 * Be simple and easy to use for a non-technical user. footnote:[Source: Sarah Chen interview]
 
-
 Rationale: Mixed technical literacy across agents.
 
 
@@ -75,10 +74,9 @@ Rationale: Mixed technical literacy across agents.
 
 The system shall allow a user to:
 
-* Upload one image file.
-* Preview the uploaded label.
-* Enter corresponding application form fields manually.
-* Display the results of the comparison (see FR-UI-4).
+* Upload one image file. footnote:[Source: Implied by assignment scope]
+* Enter corresponding application form fields manually. footnote:[Source: Marcus Williams interview]
+* Display the results of the comparison (see FR-UI-4). footnote:[Source: Sarah Chen interview]
 
 
 
