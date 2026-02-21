@@ -65,9 +65,7 @@ The system shall function as a *decision-support tool*, not an autonomous adjudi
 
 The interface shall:
 
-* Minimize navigation layers.
-* Present clearly labeled buttons.
-* Avoid hidden menus or complex UI interactions.
+* Be simple and easy to use for a non-technical user.
 
 Rationale: Mixed technical literacy across agents.
 
@@ -80,6 +78,7 @@ The system shall allow a user to:
 * Upload one image file.
 * Preview the uploaded label.
 * Enter corresponding application form fields manually.
+* Display the results of the comparison (see FR-UI-4).
 
 
 
@@ -110,33 +109,18 @@ For each label, the system shall display:
 |Warning Statement |Extracted   |N/A               |Valid / Invalid
 |===
 
-The system shows either match/mismatch or valid/invalid along with a confidence indicator.
+The system shows either *match/mismatch* or *valid/invalid* along with a confidence indicator.
 
 
 
 === 5.2 OCR & Extraction
 
-==== FR-OCR-1: Text Extraction
+==== FR-OCR-1: Performance Constraint
 
-The system shall extract:
-
-* Brand Name
-* Class/Type designation
-* Alcohol content
-* Net contents
-* Bottler/producer name
-* Country of origin (if present)
-* Government Health Warning Statement
+The system shall return structured results in ≤ 5 seconds per label.
 
 
-
-==== FR-OCR-2: Performance Constraint
-
-The system shall return structured results in ≤ 5 seconds per label under normal load.
-
-
-
-==== FR-OCR-3: Image Robustness
+==== FR-OCR-2: Image Robustness
 
 The system shall attempt extraction from:
 
@@ -268,13 +252,3 @@ The application shall:
 
 * Be deployable within Azure environment.
 * Avoid architecture incompatible with government infrastructure.
-
-
-
-== 6. Future Enhancements (Post-Prototype)
-
-* Direct COLA integration.
-* Workflow queue integration.
-* Advanced image preprocessing (deskewing, glare removal).
-* Model fine-tuning on TTB label corpus.
-* FedRAMP-compliant production deployment.
