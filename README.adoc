@@ -10,16 +10,6 @@ This repository contains the deliverables for the *Label Compliance Analysis* ta
 
 This README provides orientation to the project scope, artifacts supplied, and design decisions made.
 
-== Contents
-
-* `docs/` — Structured design artifacts
-** Functional Requirements Document (FRD)
-** Architectural Decision Records (ADRs)
-* `infra/` — Server configuration notes
-* `ocr/` — Local OCR experimentation (pytesseract)
-* `tests/` — Acceptance test scaffolding (Checkly / Playwright placeholders)
-* `README.adoc` — Project overview
-
 == Status
 
 As of submission:
@@ -75,14 +65,3 @@ A non-exhaustive list of remaining tasks:
 * Integrate queue workers and job orchestration
 * Expand acceptance test coverage
 * Enable evidence visualization and confidence reporting
-
-== How to Use This Repo
-
-1. Review the FRD and ADRs to understand the problem space and design intent.
-2. Examine the acceptance tests in `tests/` as executable requirements.
-3. Explore `ocr/` for initial OCR service experiments.
-4. Extend implementation against the scaffolded test harness.
-
-== Contact
-
-For questions or follow-up, please reach out to the hiring manager persona associated with this submission.
