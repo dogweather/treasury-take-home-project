@@ -23,7 +23,7 @@ The prototype shall:
 * Compare extracted values against application form data (manually entered into the prototype UI).
 * Validate the Government Health Warning Statement for exact regulatory compliance.
 * Identify mismatches and flag potential issues.
-* Return results within strict performance thresholds (see FR-OCR-2).
+* Return results within strict performance thresholds (see FR-OCR-1).
 * Operate as a standalone proof-of-concept (no integration with COLA).
 * Require no external outbound network dependencies that would be blocked by Treasury firewall controls.
 
@@ -113,7 +113,7 @@ The system shows either *match/mismatch* or *valid/invalid* along with a confide
 
 
 
-=== 5.2 OCR & Extraction
+=== 5.2 OCR & Image Processing
 
 ==== FR-OCR-1: Performance Constraint
 
@@ -227,15 +227,12 @@ The system shall provide:
 === 5.7 Security & Deployment Constraints
 
 ==== FR-SEC-1: No External ML Dependencies
-
 The prototype shall not rely on outbound API calls to public ML endpoints.
 
 Rationale: Treasury firewall blocks outbound connections.
 
 
-
 ==== FR-SEC-2: Azure-Compatible Deployment
-
 The application shall:
 
 * Be deployable within Azure environment.
