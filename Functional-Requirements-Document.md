@@ -1,0 +1,370 @@
+# Functional Requirements Document (FRD)
+
+## AI-Powered Alcohol Label Verification Prototype
+
+**Department of the Treasury – TTB Compliance Division**
+**Document Version:** Draft 0.1
+**Prepared By:** [Candidate Name]
+**Date:** [Insert Date]
+
+---
+
+# 1. Purpose
+
+This document defines the functional requirements for a standalone prototype application that uses artificial intelligence to assist TTB Compliance Agents in reviewing alcohol beverage label applications.
+
+The objective is to reduce manual verification workload by automating structured field extraction and deterministic compliance checks while preserving human adjudicative discretion.
+
+---
+
+# 2. Scope
+
+## 2.1 In Scope
+
+The prototype shall:
+
+* Accept alcohol label images (single or batch upload).
+* Extract required regulatory fields from label artwork.
+* Compare extracted values against application form data (manually entered into the prototype UI).
+* Validate the Government Health Warning Statement for exact regulatory compliance.
+* Identify mismatches and flag potential issues.
+* Return results within strict performance thresholds (≤ 5 seconds per label).
+* Operate as a standalone proof-of-concept (no integration with COLA).
+* Require no external outbound network dependencies that would be blocked by Treasury firewall controls.
+
+## 2.2 Out of Scope
+
+* Direct integration with COLA (.NET production system).
+* Full FedRAMP authorization.
+* Long-term document retention or PII storage.
+* Automated regulatory adjudication replacing human decision-making.
+
+---
+
+# 3. Stakeholders
+
+| Stakeholder     | Role                     | Key Concerns                                                          |
+| --------------- | ------------------------ | --------------------------------------------------------------------- |
+| Sarah Chen      | Deputy Director          | Throughput, usability, batch processing, 5-second response time       |
+| Marcus Williams | IT Systems Administrator | Azure environment, firewall constraints, security posture             |
+| Dave Morrison   | Senior Agent             | Preservation of human judgment, false positives, workflow disruption  |
+| Jenny Park      | Junior Agent             | Automation of repetitive checklist tasks, warning statement precision |
+
+---
+
+# 4. System Overview
+
+The system shall:
+
+1. Ingest a label image (PNG, JPG, PDF).
+2. Perform OCR and structured text extraction.
+3. Normalize extracted fields.
+4. Perform rule-based comparisons against user-entered application metadata.
+5. Validate regulatory text formatting requirements.
+6. Display structured compliance results in a simple, high-clarity interface.
+
+The system shall function as a **decision-support tool**, not an autonomous adjudication engine.
+
+---
+
+# 5. Functional Requirements
+
+## 5.1 User Interface Requirements
+
+### FR-UI-1: Simplicity
+
+The interface shall:
+
+* Use a single-page workflow.
+* Minimize navigation layers.
+* Present clearly labeled buttons.
+* Avoid hidden menus or complex UI interactions.
+
+Rationale: Mixed technical literacy across agents.
+
+---
+
+### FR-UI-2: Single Label Upload
+
+The system shall allow a user to:
+
+* Upload one image file.
+* Preview the uploaded label.
+* Enter corresponding application form fields manually.
+
+---
+
+### FR-UI-3: Batch Upload
+
+The system shall:
+
+* Accept multiple label files simultaneously.
+* Process labels sequentially or in parallel.
+* Display individual results per label.
+* Provide a consolidated summary view of mismatches.
+
+Rationale: High-volume importer submissions.
+
+---
+
+### FR-UI-4: Results Dashboard
+
+For each label, the system shall display:
+
+| Field             | Label Value | Application Value | Status           |
+| ----------------- | ----------- | ----------------- | ---------------- |
+| Brand Name        | Extracted   | User-entered      | Match / Mismatch |
+| ABV               | Extracted   | User-entered      | Match / Mismatch |
+| Net Contents      | Extracted   | User-entered      | Match / Mismatch |
+| Warning Statement | Extracted   | N/A               | Valid / Invalid  |
+
+Status indicators shall use:
+
+* Green = match/compliant
+* Red = mismatch/noncompliant
+* Yellow = low confidence OCR
+
+---
+
+## 5.2 OCR & Extraction Requirements
+
+### FR-OCR-1: Text Extraction
+
+The system shall extract:
+
+* Brand Name
+* Class/Type designation
+* Alcohol content
+* Net contents
+* Bottler/producer name
+* Country of origin (if present)
+* Government Health Warning Statement
+
+---
+
+### FR-OCR-2: Performance Constraint
+
+The system shall return structured results in ≤ 5 seconds per label under normal load.
+
+---
+
+### FR-OCR-3: Image Robustness
+
+The system shall attempt extraction from:
+
+* Slightly rotated images
+* Moderate glare
+* Non-ideal lighting
+
+If confidence score < threshold:
+
+* Flag for manual review.
+
+---
+
+## 5.3 Field Matching Requirements
+
+### FR-MATCH-1: Brand Name Comparison
+
+The system shall:
+
+* Perform case-insensitive comparison.
+* Normalize apostrophes and punctuation.
+* Ignore minor stylistic differences (e.g., capitalization).
+* Flag substantive lexical differences.
+
+The system shall allow agent override.
+
+---
+
+### FR-MATCH-2: Alcohol Content Validation
+
+The system shall:
+
+* Extract % ABV.
+* Recognize proof equivalency (proof = ABV × 2 for spirits).
+* Normalize numeric formatting.
+* Flag discrepancies beyond rounding tolerance.
+
+---
+
+### FR-MATCH-3: Net Contents Validation
+
+The system shall:
+
+* Extract volume measurement.
+* Normalize units (mL, L, fl oz).
+* Compare normalized values.
+
+---
+
+## 5.4 Government Warning Statement Validation
+
+### FR-WARN-1: Exact Text Match
+
+The system shall validate the warning statement against the federally mandated text:
+
+* Must match word-for-word.
+* Must include “GOVERNMENT WARNING:” in all caps.
+* Must detect deviation in wording.
+
+---
+
+### FR-WARN-2: Formatting Check
+
+Where feasible, the system shall:
+
+* Detect uppercase requirement.
+* Attempt to detect bold styling.
+* Flag if likely noncompliant.
+
+If formatting confidence is insufficient, system shall flag for manual review.
+
+---
+
+## 5.5 Confidence & Escalation
+
+### FR-CONF-1: Confidence Scoring
+
+Each extracted field shall include a confidence score.
+
+If below threshold:
+
+* Highlight in yellow.
+* Recommend manual verification.
+
+---
+
+### FR-CONF-2: Human-in-the-Loop
+
+The system shall:
+
+* Allow manual correction of extracted values.
+* Allow override of flagged mismatches.
+* Log user adjustments (prototype-level logging only).
+
+---
+
+## 5.6 Batch Processing
+
+### FR-BATCH-1: Multi-File Handling
+
+The system shall:
+
+* Process up to 300 labels in a batch.
+* Display progress indicator.
+* Maintain individual result records per label.
+
+---
+
+### FR-BATCH-2: Summary Reporting
+
+The system shall provide:
+
+* Total labels processed
+* Number compliant
+* Number flagged
+* Number low-confidence
+
+---
+
+## 5.7 Security & Deployment Constraints
+
+### FR-SEC-1: No External ML Dependencies
+
+The prototype shall not rely on outbound API calls to public ML endpoints.
+
+Rationale: Treasury firewall blocks outbound connections.
+
+---
+
+### FR-SEC-2: Azure-Compatible Deployment
+
+The application shall:
+
+* Be deployable within Azure environment.
+* Support containerized deployment (e.g., Docker).
+* Avoid architecture incompatible with government infrastructure.
+
+---
+
+### FR-SEC-3: Data Handling
+
+The prototype shall:
+
+* Avoid storing uploaded labels persistently.
+* Process in-memory where possible.
+* Delete temporary files after processing.
+
+---
+
+# 6. Non-Functional Requirements
+
+| Category        | Requirement                          |
+| --------------- | ------------------------------------ |
+| Performance     | ≤ 5 sec per label                    |
+| Availability    | Prototype-grade; no SLA required     |
+| Scalability     | Support batch up to 300 labels       |
+| Usability       | Minimal training required            |
+| Accessibility   | Large fonts, clear indicators        |
+| Maintainability | Modular architecture                 |
+| Extensibility   | Designed for future COLA integration |
+
+---
+
+# 7. Error Handling Requirements
+
+The system shall:
+
+* Display clear error messages for unreadable files.
+* Handle unsupported file types gracefully.
+* Timeout with user notification if processing exceeds threshold.
+* Fail safely (no silent errors).
+
+---
+
+# 8. Trade-Off Documentation (To Be Included in README)
+
+Prototype documentation shall include:
+
+* OCR engine selection rationale.
+* Local vs cloud ML trade-off analysis.
+* Handling of formatting detection limitations.
+* Known limitations (e.g., stylized fonts, heavy glare).
+* Future roadmap for production hardening.
+
+---
+
+# 9. Success Criteria
+
+The prototype will be considered successful if:
+
+* It demonstrably reduces manual checklist effort.
+* It processes labels within 5 seconds.
+* It flags mismatches accurately.
+* It is usable by low-technical-literacy users.
+* It maintains human oversight.
+
+---
+
+# 10. Future Enhancements (Post-Prototype)
+
+* Direct COLA integration.
+* Workflow queue integration.
+* Advanced image preprocessing (deskewing, glare removal).
+* Model fine-tuning on TTB label corpus.
+* FedRAMP-compliant production deployment.
+
+---
+
+# Architectural Positioning
+
+This prototype is a **decision-support automation layer**, not a replacement for regulatory judgment. It reduces clerical burden while preserving compliance agent authority.
+
+---
+
+If you would like, I can next:
+
+* Convert this into a more formal federal-style requirements artifact (aligned with IEEE 830 / ISO/IEC/IEEE 29148),
+* Add traceability matrices,
+* Or produce a companion Technical Architecture Document (TAD) aligned with federal IT governance expectations.

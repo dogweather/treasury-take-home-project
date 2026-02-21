@@ -1,7 +1,7 @@
 :toc:
 :toclevels: 1
 
-= Architecture Decision Records
+= Architecture Decision Records (ADRs)
 
 == ADR 1 — Baseline Processing Strategy: Local vs Cloud OCR/AI
 
