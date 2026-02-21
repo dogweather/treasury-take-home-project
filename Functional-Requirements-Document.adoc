@@ -1,0 +1,223 @@
+:toc:
+:toclevels: 2
+
+= Functional Requirements Document (FRD)
+
+
+== 1. Purpose
+
+This document defines the functional requirements for a standalone prototype application that uses artificial intelligence to assist TTB Compliance Agents in reviewing alcohol beverage label applications.
+
+The objective is to reduce manual verification workload by automating structured field extraction and deterministic compliance checks while preserving human adjudicative discretion.
+
+
+
+== 2. Scope
+
+=== 2.1 In Scope
+
+The prototype shall:
+
+* Accept alcohol label images (single or batch upload).
+* Extract required regulatory fields from label artwork.
+* Compare extracted values against application form data (manually entered into the prototype UI).
+* Validate the Government Health Warning Statement for exact regulatory compliance.
+* Identify mismatches and flag potential issues.
+* Return results within strict performance thresholds (see FR-OCR-1).
+* Operate as a standalone proof-of-concept (no integration with COLA).
+* Require no external outbound network dependencies that would be blocked by Treasury firewall controls.
+
+=== 2.2 Out of Scope
+
+* Direct integration with COLA (.NET production system).
+* Full FedRAMP authorization.
+* Long-term document retention or PII storage.
+* Automated regulatory adjudication replacing human decision-making.
+
+
+
+== 3. Stakeholders
+
+[options="header"]
+|===
+|Stakeholder     |Role                     |Key Concerns
+|Sarah Chen      |Deputy Director of Label Compliance         |Throughput, usability, batch processing, 5-second response time
+|Marcus Williams |IT Systems Administrator |Azure environment, firewall constraints, security posture
+|Dave Morrison   |Senior Agent             |Preservation of human judgment, false positives, workflow disruption
+|Jenny Park      |Junior Agent             |Automation of repetitive checklist tasks, warning statement precision
+|===
+
+
+
+== 4. System Overview
+
+The system accepts alcohol label images and user-entered application data, identifies discrepancies between them, and presents structured results to support agent review.
+
+The system shall function as a *decision-support tool*, not an autonomous adjudication engine.
+
+
+
+== 5. Functional Requirements
+
+=== 5.1 User Interface
+
+==== FR-UI-1: Simplicity
+The interface shall:
+
+* Be simple and easy to use for a non-technical user. footnote:[Sarah Chen interview.]
+
+Rationale: Mixed technical literacy across agents.
+
+
+
+==== FR-UI-2: Single Label Upload
+
+The system shall allow a user to:
+
+* Upload one image file. footnote:[Implied by assignment scope.]
+* Enter corresponding application form fields manually. footnote:[Marcus Williams interview.]
+* Display the results of the comparison (see FR-UI-4). footnote:[Sarah Chen interview.]
+
+
+
+==== FR-UI-3: Batch Upload
+
+The system shall:
+
+* Accept multiple label files simultaneously. footnote:[Ibid.]
+* Display individual results per label. footnote:[Ibid.]
+* Provide a consolidated summary view of mismatches. footnote:[Ibid.]
+
+Rationale: High-volume importer submissions.
+
+
+
+==== FR-UI-4: Results Dashboard
+
+For each label, the system shall display: footnote:[Additional Context section.]
+
+[options="header"]
+|===
+|Field             |Label Value |Application Value |Status
+|Brand Name        |Extracted   |User-entered      |Match / Mismatch
+|ABV               |Extracted   |User-entered      |Match / Mismatch
+|Class/Type        |Extracted   |User-entered      |Match / Mismatch
+|Net Contents      |Extracted   |User-entered      |Match / Mismatch
+|Warning Statement |Extracted   |N/A               |Valid / Invalid
+|===
+
+The system shows either *match/mismatch* or *valid/invalid* along with a confidence indicator.
+
+
+
+=== 5.2 OCR & Image Processing
+
+==== FR-OCR-1: Performance Constraint
+
+The system shall return structured results in ≤ 5 seconds per label. footnote:[Sarah Chen interview.]
+
+
+==== FR-OCR-2: Image Robustness
+
+The system shall attempt extraction from:
+
+* Slightly rotated images footnote:[Jenny Park interview.]
+* Moderate glare footnote:[Ibid.]
+* Non-ideal lighting footnote:[Ibid.]
+
+If confidence score < threshold:
+
+* Flag for manual review.
+
+
+
+=== 5.3 Field Matching
+
+==== FR-MATCH-1: Brand Name Comparison
+
+The system shall:
+
+* Perform case-insensitive comparison. footnote:[Dave Morrison interview.]
+* Potentially perform other "obviously the same" comparisons. footnote:[Ibid.]
+* Flag substantive lexical differences. footnote:[Ibid.]
+
+
+
+==== FR-MATCH-2: Alcohol Content Validation
+
+The system shall:
+
+* Extract % ABV. footnote:[Sarah Chen interview.]
+* Recognize proof equivalency (proof = ABV × 2 for spirits). footnote:[Additional Context section.]
+
+
+
+==== FR-MATCH-3: Net Contents Validation
+
+The system shall:
+
+* Extract volume measurement. footnote:[Ibid.]
+
+
+
+=== 5.4 Government Warning Statement Validation
+
+==== FR-WARN-1: Exact Text Match
+
+The system shall validate the warning statement against the federally mandated text:
+
+> *GOVERNMENT WARNING:* (1) ACCORDING TO THE SURGEON GENERAL, WOMEN SHOULD NOT DRINK ALCOHOLIC BEVERAGES DURING PREGNANCY BECAUSE OF THE RISK OF BIRTH DEFECTS. (2) CONSUMPTION OF ALCOHOLIC BEVERAGES IMPAIRS YOUR ABILITY TO DRIVE A CAR OR OPERATE MACHINERY, AND MAY CAUSE HEALTH PROBLEMS.
+
+* Must match word-for-word. footnote:[Jenny Park interview.]
+* Must include "*GOVERNMENT WARNING:*" in all caps and bold. footnote:[Ibid.]
+* Must detect deviation in wording. footnote:[Ibid.]
+
+If formatting confidence is insufficient, system shall flag for manual review.
+
+
+
+=== 5.5 Confidence & Escalation
+
+==== FR-CONF-1: Confidence Scoring
+
+The system shall indicate when it's uncertain about an extraction and recommend manual review. footnote:[Jenny Park & Dave Morrison interviews.]
+
+
+==== FR-CONF-2: Human-in-the-Loop
+
+The system shall:
+
+* Allow override of flagged mismatches. footnote:[Dave Morrison interview.]
+
+
+
+=== 5.6 Batch Processing
+
+==== FR-BATCH-1: Multi-File Handling
+
+The system shall:
+
+* Process up to 300 labels in a batch. footnote:[Sarah Chen interview.]
+* Maintain individual result records per label. footnote:[Ibid.]
+
+
+
+==== FR-BATCH-2: Summary Reporting
+
+The system shall provide enough information to the user to review the batch and determine which labels need to be reviewed manually. footnote:[Sarah Chen interview.]
+
+
+
+=== 5.7 Security & Deployment Constraints
+
+==== FR-SEC-1: No External ML Dependencies
+The prototype shall not rely on outbound API calls to public ML endpoints. footnote:[Marcus Williams interview.]
+
+Rationale: Treasury firewall blocks outbound connections.
+
+
+==== FR-SEC-2: Azure-Compatible Deployment
+The application shall:
+
+* Be deployable within Azure environment. footnote:[Ibid.]
+* Avoid architecture incompatible with government infrastructure. footnote:[Ibid.]
