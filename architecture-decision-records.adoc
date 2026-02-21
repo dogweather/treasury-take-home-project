@@ -6,7 +6,7 @@
 == ADR 1 — Baseline Processing Strategy: Local vs Cloud OCR/AI
 
 === Context:
-The stakeholder prompt mentions that "our network blocks outbound traffic to a lot of domains," and prior vendor ML features failed due to firewall blocking. No explicit prohibition of cloud APIs is given, but network restrictions are implied.
+Marcus Williams noted that "our network blocks outbound traffic to a lot of domains," and prior vendor ML features failed due to firewall blocking. No explicit prohibition of cloud APIs is given, but network restrictions are implied.
 
 === Decision:
 Adopt *local OCR and processing as the default baseline* for MVP. Treat cloud OCR/ML (e.g., AWS GovCloud) as an _optional adapter_ that can be enabled with explicit firewall/IT approval.
