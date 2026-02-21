@@ -37,7 +37,7 @@ Due to the time constraint and prioritization of architectural artifacts and exe
 
 The FRD captures user needs, system boundaries, and measurable acceptance criteria aligned to stakeholder interviews and the assignment rubric.
 
-* Link: xref:FRD.adoc[Functional Requirements Document]
+* Link: xref:Functional-Requirements-Document.adoc[Functional Requirements Document]
 
 This document includes:
 * Detailed use cases
@@ -49,7 +49,7 @@ This document includes:
 
 A set of ADRs that document the rationale, alternatives considered, chosen approaches, and consequences for major architectural choices.
 
-* Link: xref:arch/ADRs.adoc[Architectural Decision Records]
+* Link: xref:Architecture-Decision-Records.adoc[Architectural Decision Records]
 
 These ADRs cover:
 * Baseline processing strategy (local vs. cloud)
