@@ -80,6 +80,8 @@ Model two processing paths:
 
 == ADR 4 — Use of GovCloud for Optional Cloud Services
 
+=== Status: Accepted
+
 === Context:
 Treasury and IRS systems are known to be hosted in AWS GovCloud, which satisfies federal cloud compliance requirements.
 
@@ -102,6 +104,8 @@ Define an *optional GovCloud adapter* for OCR/ML/queue services. The service lay
 
 == ADR 5 — Confidence Scoring Definition and Explanation
 
+=== Status: Accepted
+
 === Context:
 AI/ML extraction is inherently probabilistic. Stakeholders require "transparency of degree of certainty."
 
@@ -121,6 +125,8 @@ Deliver per-field confidence and evidence locations.
 
 
 == ADR 6 — Synthetic Monitoring for Core Use Cases
+
+=== Status: Accepted
 
 === Context:
 Acceptance tests will be written as an outside-in TDD roadmap.
