@@ -23,7 +23,6 @@ Adopt *local OCR and processing as the default baseline* for MVP. Treat cloud OC
 * Cloud adaptor becomes a documented optional enhancement with security gating.
 ** Some advanced OCR quality improvements may be deferred until cloud is enabled.
 
-'''
 
 == ADR 2 — Microservice Boundary for OCR and Vision Processing
 
@@ -46,7 +45,7 @@ Separate core *web application (Rails)* from *vision/OCR processing (Python micr
 * Provides clear service boundary and contract (JSON schema).
 ** Adds operational complexity of two runtimes and service orchestration.
 
-'''
+
 
 == ADR 3 — Synchronous "Fast Pass" vs Asynchronous "Full Pass" Processing
 
@@ -71,7 +70,7 @@ Model two processing paths:
 * Supports batch workflows with reliable background processing.
 ** Requires job orchestration and partial result reporting model.
 
-'''
+
 
 == ADR 4 — Acceptance Tests as Executable Requirements
 
@@ -93,7 +92,6 @@ Write *black-box acceptance tests* (e.g., in Checkly with Playwright) to encode 
 * Verifies behavior against functional requirements without complete implementation.
 ** Requires initial investment in test scaffolding.
 
-'''
 
 == ADR 5 — Use of GovCloud for Optional Cloud Services
 
@@ -115,7 +113,6 @@ Define an *optional GovCloud adapter layer* for OCR/ML/queue services in design,
 * Documents readiness to enhance quality with cloud services.
 ** Adds a requirement to coordinate firewall and governance later.
 
-'''
 
 == ADR 6 — API Contract First vs Code First
 
@@ -136,7 +133,6 @@ Design *API contracts and JSON schemas before implementing backend code* to ensu
 * Clarifies integration between Rails and OCR service early.
 ** Requires discipline in schema definition.
 
-'''
 
 == ADR 7 — Confidence Scoring Definition and Explanation
 
@@ -164,7 +160,6 @@ Deliver per-field confidence and evidence locations.
 * Enables thresholding for human review vs auto-approve.
 ** Requires test harness to capture and evaluate confidence.
 
-'''
 
 == ADR 8 — Synthetic Monitoring for Core Use Cases
 
@@ -186,7 +181,6 @@ Use the same acceptance tests as *continuous synthetic monitoring* on a status p
 * Adds a proactive quality measurement layer.
 ** Requires maintenance of monitoring config.
 
-'''
 
 == ADR 9 — Scoped MVP vs Full Feature Set under Deadline
 
@@ -216,7 +210,6 @@ Defer remaining implementation to a documented backlog.
 * Reduces risk of missing the deadline with half-baked features.
 ** Less runnable code to demo, but compensated by docs and tests.
 
-'''
 
 == ADR 10 — Delegation and Incremental Implementation Strategy
 
@@ -241,7 +234,3 @@ Document a clear delegation strategy with:
 * Demonstrates engineering leadership and practical planning.
 * Shows route to complete system beyond MVP.
 ** Relies on team augmentation post-delivery.
-
-'''
-
-If you'd like, I can format these ADRs into *Markdown or ADR boilerplate files* (e.g., `0001-local-vs-cloud-ocr.md`) with metadata and links between them — ready to include in your submission repository.
