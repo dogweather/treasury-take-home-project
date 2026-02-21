@@ -187,7 +187,7 @@ Each extracted field shall include a confidence score.
 
 If below threshold:
 
-* Highlight in yellow.
+* Highlight for the user to review.
 * Recommend manual verification.
 
 
@@ -198,7 +198,6 @@ The system shall:
 
 * Allow manual correction of extracted values.
 * Allow override of flagged mismatches.
-* Log user adjustments (prototype-level logging only).
 
 
 
