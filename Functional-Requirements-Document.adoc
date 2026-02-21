@@ -35,7 +35,7 @@ The prototype shall:
 * Operate as a standalone proof-of-concept (no integration with COLA).
 * Require no external outbound network dependencies that would be blocked by Treasury firewall controls.
 
-== 2.2 Out of Scope
+=== 2.2 Out of Scope
 
 * Direct integration with COLA (.NET production system).
 * Full FedRAMP authorization.
@@ -74,9 +74,9 @@ The system shall function as a *decision-support tool*, not an autonomous adjudi
 
 == 5. Functional Requirements
 
-== 5.1 User Interface
+=== 5.1 User Interface
 
-=== FR-UI-1: Simplicity
+==== FR-UI-1: Simplicity
 
 The interface shall:
 
@@ -88,7 +88,7 @@ Rationale: Mixed technical literacy across agents.
 
 
 
-=== FR-UI-2: Single Label Upload
+==== FR-UI-2: Single Label Upload
 
 The system shall allow a user to:
 
@@ -98,7 +98,7 @@ The system shall allow a user to:
 
 
 
-=== FR-UI-3: Batch Upload
+==== FR-UI-3: Batch Upload
 
 The system shall:
 
@@ -111,7 +111,7 @@ Rationale: High-volume importer submissions.
 
 
 
-=== FR-UI-4: Results Dashboard
+==== FR-UI-4: Results Dashboard
 
 For each label, the system shall display:
 
@@ -129,9 +129,9 @@ The system shows either match/mismatch or valid/invalid along with a confidence 
 
 
 
-== 5.2 OCR & Extraction
+=== 5.2 OCR & Extraction
 
-=== FR-OCR-1: Text Extraction
+==== FR-OCR-1: Text Extraction
 
 The system shall extract:
 
@@ -145,13 +145,13 @@ The system shall extract:
 
 
 
-=== FR-OCR-2: Performance Constraint
+==== FR-OCR-2: Performance Constraint
 
 The system shall return structured results in ≤ 5 seconds per label under normal load.
 
 
 
-=== FR-OCR-3: Image Robustness
+==== FR-OCR-3: Image Robustness
 
 The system shall attempt extraction from:
 
@@ -165,9 +165,9 @@ If confidence score < threshold:
 
 
 
-== 5.3 Field Matching
+=== 5.3 Field Matching
 
-=== FR-MATCH-1: Brand Name Comparison
+==== FR-MATCH-1: Brand Name Comparison
 
 The system shall:
 
@@ -180,7 +180,7 @@ The system shall allow agent override.
 
 
 
-=== FR-MATCH-2: Alcohol Content Validation
+==== FR-MATCH-2: Alcohol Content Validation
 
 The system shall:
 
@@ -191,7 +191,7 @@ The system shall:
 
 
 
-=== FR-MATCH-3: Net Contents Validation
+==== FR-MATCH-3: Net Contents Validation
 
 The system shall:
 
@@ -201,9 +201,9 @@ The system shall:
 
 
 
-== 5.4 Government Warning Statement Validation
+=== 5.4 Government Warning Statement Validation
 
-=== FR-WARN-1: Exact Text Match
+==== FR-WARN-1: Exact Text Match
 
 The system shall validate the warning statement against the federally mandated text:
 
@@ -221,9 +221,9 @@ If formatting confidence is insufficient, system shall flag for manual review.
 
 
 
-== 5.5 Confidence & Escalation
+=== 5.5 Confidence & Escalation
 
-=== FR-CONF-1: Confidence Scoring
+==== FR-CONF-1: Confidence Scoring
 
 Each extracted field shall include a confidence score.
 
@@ -234,7 +234,7 @@ If below threshold:
 
 
 
-=== FR-CONF-2: Human-in-the-Loop
+==== FR-CONF-2: Human-in-the-Loop
 
 The system shall:
 
@@ -244,9 +244,9 @@ The system shall:
 
 
 
-== 5.6 Batch Processing
+=== 5.6 Batch Processing
 
-=== FR-BATCH-1: Multi-File Handling
+==== FR-BATCH-1: Multi-File Handling
 
 The system shall:
 
@@ -256,7 +256,7 @@ The system shall:
 
 
 
-=== FR-BATCH-2: Summary Reporting
+==== FR-BATCH-2: Summary Reporting
 
 The system shall provide:
 
@@ -267,9 +267,9 @@ The system shall provide:
 
 
 
-== 5.7 Security & Deployment Constraints
+=== 5.7 Security & Deployment Constraints
 
-=== FR-SEC-1: No External ML Dependencies
+==== FR-SEC-1: No External ML Dependencies
 
 The prototype shall not rely on outbound API calls to public ML endpoints.
 
@@ -277,7 +277,7 @@ Rationale: Treasury firewall blocks outbound connections.
 
 
 
-=== FR-SEC-2: Azure-Compatible Deployment
+==== FR-SEC-2: Azure-Compatible Deployment
 
 The application shall:
 
@@ -287,7 +287,7 @@ The application shall:
 
 
 
-=== FR-SEC-3: Data Handling
+==== FR-SEC-3: Data Handling
 
 The prototype shall:
 
