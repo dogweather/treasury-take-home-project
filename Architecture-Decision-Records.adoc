@@ -114,14 +114,7 @@ Define a *confidence model* that combines:
 
 Deliver per-field confidence and evidence locations.
 
-=== Alternatives Considered:
-
-. Single binary pass/fail — loses nuance and reviewer trust.
-. Confidence by anecdote — unstructured.
-. Structured scoring model — _selected_.
-
 === Consequences:
-
 * Provides explainable metrics for each field decision.
 * Enables thresholding for human review vs auto-approve.
 ** Requires test harness to capture and evaluate confidence.
